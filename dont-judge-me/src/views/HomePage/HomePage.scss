@@ -1,0 +1,25 @@
+.main {
+  display: flex;
+  justify-content: space-evenly;
+  transform: translateY(30%);
+
+  h1 {
+    padding-top: 1rem;
+  }
+
+  button {
+    padding: 20px;
+    background-color: #00c3ff;
+    border: none;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    border-radius: 4px;
+    color: white;
+    font-size: 1em;
+    box-shadow: 6px 6px 14px -5px rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      background-color: #8be4ff;
+    }
+  }   
+}
