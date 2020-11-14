@@ -2,16 +2,34 @@ import os
 from selenium import webdriver
 from time import sleep
 import re
+import sys
+import datetime
 
 options = webdriver.ChromeOptions()
 options.add_argument("headless")
-
 driver = webdriver.Chrome("/Users/adsunarto/Downloads/chromedriver", chrome_options=options)
-# driver.binary_location = "/Applications/Ease of Access/Google Chrome.app/Contents/MacOS/Google Chrome"
-# chrome_driver_binary = "/usr/local/bin/chromedriver"
-driver.get("https://www.tmz.com/2020/11/13/soles-by-sir-cleat-artist-designer-involved-serious-car-crash-nba-nfl/")
-# driver.get(sys.argv[1])
+driver.get(sys.argv[1])
+
+"""
+Get article text
+"""
+
 main_tag = driver.find_element_by_id("main")
+main_tag = main_tag.text.split('\n')
+main_tag_para = []
+# print(main_tag)
+for i in main_tag:
+  if i == "SHARE":
+    break
+  if i != "Play video content" and not i.isupper() and not re.search('\d*\/\d*\/\d*',i):
+    main_tag_para.append(i)
+
+print(main_tag_para)
+
+"""
+Get article images
+"""
+
 sleep(2)
 images = driver.find_elements_by_tag_name("img")
 for i in range(len(images)):
@@ -25,11 +43,12 @@ for i in range(5, len(images)-1):
   else:
     break
 
-images[5] = ''.join(images[5])
-print(images[5])
-
-for i in range(6,5+num_img):
+load_img = []
+for i in range(5,5+num_img-23):
   images[i] = ''.join(images[i])
-  print(images[i])
+  load_img.append(images[i])
+  # print(images[i])
+
+print(load_img)
 
 driver.quit()
