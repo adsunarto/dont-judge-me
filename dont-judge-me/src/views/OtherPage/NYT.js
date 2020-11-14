@@ -1,4 +1,4 @@
-import React, {Component, Fragment, useEffect} from "react";
+import React, {Component, Fragment, useEffect, useState} from "react";
 import "./NYT.scss";
 
 const axios = require("axios")
@@ -7,18 +7,21 @@ const NYT = (props) => {
 
         const info = props.location.state
         const url = info.props
+        const [data, setData] = useState({})
         
         useEffect(() => {
           axios.post("http://localhost:8000/api/getText", {
             url: url
           })
           .then(response => {
-            console.log(response)
+            setData(response.data)
+            console.log(response.data)
           })
           .catch(err => {
             console.log(err)
           })
-        });
+        }, []);
+        if(data.length == 2) {
 
         return (
             <Fragment>
@@ -63,7 +66,10 @@ const NYT = (props) => {
             </figure>
           </article>
           <section className="article-body">
-            <h6><a href="#">By Dennis Overbye</a></h6>
+            {data[0].map(item => {
+              return <p>{item[0]}</p>;
+            })}
+            {/* <h6><a href="#">By Dennis Overbye</a></h6>
             <div className="social-icons">
               <ul>
                 <li><time className="date-time" dateTime="2014-03-17T10:46:03-04:00">March 17, 2014</time></li>
@@ -161,7 +167,7 @@ const NYT = (props) => {
               reported their results in a scientific briefing at the Center for
               Astrophysics here on Monday and in a set of papers submitted to The
               Astrophysical Journal.
-            </p>
+          </p> */}
           </section>
           <section className="article-addational-info">
             <h2>The Theory of Inflation</h2>
@@ -808,6 +814,10 @@ const NYT = (props) => {
     );
         </Fragment>
   );
+} else {
+  return(
+    <div>Hi</div>
+  )
 }
-
+}
 export default NYT;
