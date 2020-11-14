@@ -9,6 +9,8 @@ module.exports = function(app) {
 
     PythonShell.run('webscraping.py', options, function (err, results) {
       if (results) {
+        results[0] = results[0].replace("[","").replace("]","").split(',');
+        results[1] = results[1].replace("[","").replace("]","").split(',');
         console.log(results);
         res.send(results);
         return;
