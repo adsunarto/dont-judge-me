@@ -1,10 +1,28 @@
-import React, {Component, Fragment} from "react";
+import React, {Component, Fragment, useEffect} from "react";
 import "./NYT.scss";
 
-class NYT extends Component {
-    render() {
+const axios = require("axios")
+
+const NYT = (props) => {
+
+        const info = props.location.state
+        const url = info.props
+        
+        useEffect(() => {
+          axios.post("http://localhost:8000/api/getText", {
+            url: url
+          })
+          .then(response => {
+            console.log(response)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        });
+
         return (
             <Fragment>
+              {url}
                <div>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -788,11 +806,8 @@ class NYT extends Component {
         <div className="clear" />
       </div>
     );
-  }
-});
-            </Fragment>
-        );
-    }
+        </Fragment>
+  );
 }
 
 export default NYT;

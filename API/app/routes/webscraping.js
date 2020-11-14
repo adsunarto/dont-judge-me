@@ -2,7 +2,7 @@ module.exports = function(app) {
   let {PythonShell} = require('python-shell');
   app.post('/api/getText', (req, res) => {
     let options = {
-      scriptPath: `/Users/adsunarto/Documents/Projects/dont-judge-me/API/app/routes`,
+      scriptPath: `/Users/eriklee/dont-judge-me/API/app/routes`,
       args: [req.body.url]
     }
 

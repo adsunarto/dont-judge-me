@@ -7,7 +7,7 @@ import datetime
 
 options = webdriver.ChromeOptions()
 options.add_argument("headless")
-driver = webdriver.Chrome("/Users/adsunarto/Downloads/chromedriver", chrome_options=options)
+driver = webdriver.Chrome("/Users/eriklee/Downloads/chromedriver", chrome_options=options)
 driver.get(sys.argv[1])
 
 """
