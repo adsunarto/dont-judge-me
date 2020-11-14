@@ -1,13 +1,17 @@
 import os
-from selenium import webdriver
+from dotenv import load_dotenv
 from time import sleep
 import re
 import sys
 import datetime
+import os
 
+from selenium import webdriver
+
+load_dotenv()
 options = webdriver.ChromeOptions()
 options.add_argument("headless")
-driver = webdriver.Chrome("/Users/eriklee/Downloads/chromedriver", chrome_options=options)
+driver = webdriver.Chrome(os.getenv("PYTHON_PATH"), chrome_options=options)
 driver.get(sys.argv[1])
 
 """

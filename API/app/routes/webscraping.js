@@ -1,8 +1,9 @@
 module.exports = function(app) {
+  require("dotenv").config()
   let {PythonShell} = require('python-shell');
   app.post('/api/getText', (req, res) => {
     let options = {
-      scriptPath: `/Users/eriklee/dont-judge-me/API/app/routes`,
+      scriptPath: `${process.env.SCRIPT_PATH}`,
       args: [req.body.url]
     }
 
