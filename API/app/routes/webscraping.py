@@ -50,6 +50,7 @@ for i in range(5, len(images)-1):
 load_img = []
 for i in range(5,5+num_img-23):
   images[i] = ''.join(images[i])
+  images[i] = images[i].replace("'","")
   load_img.append(images[i])
   # print(images[i])
 

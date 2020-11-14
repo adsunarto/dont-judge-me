@@ -1,6 +1,13 @@
 import React, {Component, Fragment, useEffect, useState} from "react";
 import "./NYT.scss";
 
+import 'pure-react-carousel/dist/react-carousel.es.css';
+import { CarouselProvider, Slider, Slide,
+  ButtonBack, ButtonFirst, ButtonLast, ButtonNext, DotGroup, Image
+ } from 'pure-react-carousel';
+
+import s from './style.scss';
+
 const axios = require("axios")
 
 const NYT = (props) => {
@@ -15,18 +22,24 @@ const NYT = (props) => {
           })
           .then(response => {
             setData(response.data)
-            console.log(response.data)
+            console.log(response.data[1]);
+            console.log(response.data);
           })
           .catch(err => {
             console.log(err)
           })
         }, []);
-        if(data.length == 2) {
+        
+        const [index, setIndex] = useState(0);
 
+        const handleSelect = (selectedIndex, e) => {
+          setIndex(selectedIndex);
+        };
+
+        if(data.length == 2) {
         return (
-            <Fragment>
-              {url}
-               <div>
+          <Fragment>
+                <div>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
@@ -52,22 +65,51 @@ const NYT = (props) => {
         </header>
         <div className="clear" />
         <main className="page-main">
-          <article className="introductory-section">
-            <div className="article-title">
-              <h1>Space Ripples Reveal <br /> Big Bang’s Smoking Gun</h1>
-            </div>
-            <figure className="article-figure">
+            <CarouselProvider
+              visibleSlides={1}
+              totalSlides={4}
+              step={1}
+              naturalSlideWidth={100}
+              naturalSlideHeight={50}
+              hasMasterSpinner
+            >
+              <Slider className={s.slider}>
+                <Slide index={0}>
+                  <Image src="./images/alan-guth.jpg" />
+                </Slide>
+                {/* {console.log(data[1].length)} */}
+                <Slide index={1}>
+                  <Image src="https://imagez.tmz.com/image/16/4by3/2020/11/14/1605a08cf12e4a33b51687cdc5400833_md.jpg" />
+                </Slide>
+                <Slide index={2}>
+                  <Image src="https://imagez.tmz.com/image/c7/4by3/2020/11/14/c7b6ac6e157443c590a7b9dc6795aa22_md.jpg" />
+                </Slide>
+                <Slide index={3}>
+                  <Image src="https://imagez.tmz.com/image/9e/o/2018/03/15/9efb4db1c2b555fe8e32cc3f3cde59e8_lg.png" />
+                </Slide>
+                {/* {data[1].map(item => {
+                  <Slide index={1}>
+                    <Image src={item.replace('\'','').replace('\'','')} />
+                  </Slide>
+                })} */}
+              </Slider>
+              <ButtonFirst>First</ButtonFirst>
+              <ButtonBack>Back</ButtonBack>
+              <ButtonNext>Next</ButtonNext>
+              <DotGroup />
+            </CarouselProvider>
+            {/* <figure className="article-figure">
               <img alt="Alan Guth was one of the first physicists to hypothesize the existence of inflation, which explains how the universe expanded so uniformly and so quickly in the instant after the Big Bang 13.8 billion years ago." className="css-11cwn6f" src="./images/alan-guth.jpg" />
               <figcaption>
                 Alan Guth was one of the first physicists to hypothesize the existence of inflation, which explains how the
                 universe expanded so uniformly and so quickly in the instant after the Big Bang 13.8 billion years ago.Credit.
                 <br /><span className="credit">Rick Friedman for The New York Times</span>
               </figcaption>
-            </figure>
-          </article>
+            </figure> */}
+          {/* </article> */}
           <section className="article-body">
             {data[0].map(item => {
-              return <p>{item[0]}</p>;
+              return <p>{item.replace("\"","")}</p>;
             })}
             {/* <h6><a href="#">By Dennis Overbye</a></h6>
             <div className="social-icons">
@@ -617,7 +659,7 @@ const NYT = (props) => {
               <div className="clear" />
             </div>
             <div className="articles">
-              <section className="extra-articles editor-section">
+              {/* <section className="extra-articles editor-section">
                 <h5>Editors’ Picks</h5>
                 <div className="articles-box">
                   <div className="small-articles">
@@ -657,7 +699,7 @@ const NYT = (props) => {
                     </div>
                   </div>
                 </div>
-              </section>
+              </section> */}
             </div>
             <div className="clear" />
           </div>
@@ -776,7 +818,7 @@ const NYT = (props) => {
             </div>
           </div>
         </footer>
-        <aside className="editors-aside">
+        {/* <aside className="editors-aside">
           <h5>Editors’ Picks</h5>
           <div className="aside-container">
             <div>
@@ -801,7 +843,7 @@ const NYT = (props) => {
                   ‘OK Boomer’ Marks the End of Friendly Generational Relations</p></div>
             </div>
           </div>
-        </aside>
+        </aside> */}
         <div className="fixed-bottom">
           <p>Access more of the times by creating a free account or loggin in</p>
           <div className="expand">
@@ -813,11 +855,11 @@ const NYT = (props) => {
       </div>
     );
         </Fragment>
-  );
-} else {
-  return(
-    <div>Hi</div>
-  )
-}
+    );
+  } else {
+    return(
+      <div></div>
+    )
+  }
 }
 export default NYT;
