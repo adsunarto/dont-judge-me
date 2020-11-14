@@ -31,3 +31,5 @@ print(images[5])
 for i in range(6,5+num_img):
   images[i] = ''.join(images[i])
   print(images[i])
+
+driver.quit()
